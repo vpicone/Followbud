@@ -2,4 +2,6 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  if playlistNames
+    each name in playlistNames
+      p= name

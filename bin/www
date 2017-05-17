@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+require('dotenv').config({
+  path: 'variables.env'
+});
+
 /**
  * Module dependencies.
  */
@@ -7,9 +11,8 @@
 var app = require('../app');
 var debug = require('debug')('followfy:server');
 var http = require('http');
-require('dotenv').config({
-  path: 'variables.env'
-});
+
+
 
 /**
  * Get port from environment and store in Express.
