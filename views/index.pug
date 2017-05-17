@@ -1,7 +1,11 @@
 extends layout
 
 block content
-  h1= title
   if playlistNames
+    h2 Here are your playlists:
     each name in playlistNames
       p= name
+  else
+    p You're not logged in just yet. 
+      a(href='/auth') Click here
+      span  to authorize your account.
