@@ -1,11 +1,61 @@
 extends layout
 
 block content
-  if playlistNames
+  if playlists
     h2 Here are your playlists:
-    each name in playlistNames
-      p= name
+      each playlist in playlists
+        .row
+          .small-4.column= playlist.name
+          .small-8.column= `Number of Tracks: ${playlist.tracks.total}`
+      a(href='/auth/logout').alert.button Logout
   else
     p You're not logged in just yet. 
-      a(href='/auth') Click here
-      span  to authorize your account.
+    a(href='/auth').button Click here
+    p to authorize your account.
+    
+    
+  .card.card-tabs
+    .card-divider
+      h6.float-left Title
+      |         
+      ul#collapsing-tabs.tabs.menu.align-right(data-active-collapse='true', data-tabs='')
+        // note: these need to be in reverse order because of the align-right setting in .menu
+        li.tabs-title
+          a(href='#panel3c')
+            i.fa.fa-cog(aria-hidden='true')
+            |  Settings
+        |           
+        li.tabs-title
+          a(href='#panel2c')
+            i.fa.fa-area-chart(aria-hidden='true')
+            |             Stats
+        |           
+        li.tabs-title.is-active
+          a(href='#panel1c', aria-selected='true')
+            i.fa.fa-home(aria-hidden='true')
+            |            Home
+    |        
+    .tabs-content(data-tabs-content='collapsing-tabs')
+      #panel1c.tabs-panel.is-active
+        img(src='http://lorempixel.com/485/248/cats/7/')
+        |           
+        .card-section
+          h4 This is a card.
+          |             
+          p It has an easy to override visual style, and is appropriately subdued.
+      |         
+      #panel2c.tabs-panel
+        .card-section
+          h4 This is a card.
+          |             
+          p It has an easy to override visual style, and has a cat on the bottom.
+        |           
+        img(src='http://lorempixel.com/485/248/cats/5/')
+      |         
+      #panel3c.tabs-panel
+        .card-section
+          h4 This is a card.
+          |             
+          img(src='http://lorempixel.com/485/248/cats/6/')
+          |             
+          p It has an easy to override visual style, it has an image in the card section.
