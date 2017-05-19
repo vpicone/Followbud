@@ -3,14 +3,17 @@ mixin playlistCard(playlist = {})
 		.card
 			header.card-header
 				p.card-header-title
-					img.avatar(src='https://placehold.it/64x64')
+					img.avatar(src=`${playlist.images[0].url}`)
 					|               
 					span=`${playlist.name}`
 				span.card-header-icon.timestamp
 					| 2m
 			.card-image
 				figure.image.is-4by3
-					img(src='https://placehold.it/1280x960', alt='Image')
+					if playlist.images[0] != undefined
+						img(src=`${playlist.images[0].url}`, alt='Image')
+					else
+						img(src="../images/Spotify_Icon_RGB_Black.png", alt='Image2323')
 			.card-content
 				.panel-block-item
 					span.likes
