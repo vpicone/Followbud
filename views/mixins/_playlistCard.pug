@@ -1,0 +1,23 @@
+mixin playlistCard(playlist = {})
+	.column.is-4
+		.card
+			header.card-header
+				p.card-header-title
+					img.avatar(src='https://placehold.it/64x64')
+					|               
+					span=`${playlist.name}`
+				span.card-header-icon.timestamp
+					| 2m
+			.card-image
+				figure.image.is-4by3
+					img(src='https://placehold.it/1280x960', alt='Image')
+			.card-content
+				.panel-block-item
+					span.likes
+						span.icon
+							i.fa.fa-heart
+						|                 303k Likes
+					span.comments
+						span.icon
+							i.fa.fa-comment
+						|                 12k Comments

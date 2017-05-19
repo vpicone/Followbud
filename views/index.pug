@@ -1,61 +1,69 @@
-extends layout
-
-block content
-  if playlists
-    h2 Here are your playlists:
-      each playlist in playlists
-        .row
-          .small-4.column= playlist.name
-          .small-8.column= `Number of Tracks: ${playlist.tracks.total}`
-      a(href='/auth/logout').alert.button Logout
-  else
-    p You're not logged in just yet. 
-    a(href='/auth').button Click here
-    p to authorize your account.
-    
-    
-  .card.card-tabs
-    .card-divider
-      h6.float-left Title
-      |         
-      ul#collapsing-tabs.tabs.menu.align-right(data-active-collapse='true', data-tabs='')
-        // note: these need to be in reverse order because of the align-right setting in .menu
-        li.tabs-title
-          a(href='#panel3c')
-            i.fa.fa-cog(aria-hidden='true')
-            |  Settings
-        |           
-        li.tabs-title
-          a(href='#panel2c')
-            i.fa.fa-area-chart(aria-hidden='true')
-            |             Stats
-        |           
-        li.tabs-title.is-active
-          a(href='#panel1c', aria-selected='true')
-            i.fa.fa-home(aria-hidden='true')
-            |            Home
-    |        
-    .tabs-content(data-tabs-content='collapsing-tabs')
-      #panel1c.tabs-panel.is-active
-        img(src='http://lorempixel.com/485/248/cats/7/')
-        |           
-        .card-section
-          h4 This is a card.
-          |             
-          p It has an easy to override visual style, and is appropriately subdued.
-      |         
-      #panel2c.tabs-panel
-        .card-section
-          h4 This is a card.
-          |             
-          p It has an easy to override visual style, and has a cat on the bottom.
-        |           
-        img(src='http://lorempixel.com/485/248/cats/5/')
-      |         
-      #panel3c.tabs-panel
-        .card-section
-          h4 This is a card.
-          |             
-          img(src='http://lorempixel.com/485/248/cats/6/')
-          |             
-          p It has an easy to override visual style, it has an image in the card section.
+doctype html
+html
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		title Followfy
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
+		link#bulma(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css')
+		link(rel='stylesheet', type='text/css', href='/stylesheets/grid-gallery.css')
+		include mixins/_playlistCard
+	body
+		.container.section
+			nav#top.nav.section
+				.container
+					.nav-left
+						a.nav-item(href='../index.html')
+							img(src='../images/bulma.png', alt='Description')
+					span.nav-toggle
+						span
+						span
+						span
+					.nav-right.nav-menu
+						a.nav-item.is-tab.is-active
+							| Home
+						a.nav-item.is-tab
+							| Features
+						a.nav-item.is-tab
+							| Team
+						a.nav-item.is-tab
+							| Help
+						span.nav-item
+							a.button
+								| Log in
+							a.button.is-info
+								| Sign up
+			.columns.section
+				.column.is-8
+					.title Gallery
+				.column.is-4.has-text-right
+					a.button.is-active
+						i.fa.fa-th.title.is-5
+					a.button
+						i.fa.fa-align-justify.title.is-5
+			if playlists
+				.columns.is-multiline
+					each playlist in playlists
+						+playlistCard(playlist)
+			else
+				p You're not logged in just yet. 
+				a(href='/auth').button Click here
+				p to authorize your account.
+		footer.footer
+			.container
+				.content.has-text-centered
+					p
+						strong Bulma
+						|  by 
+						a(href='http://jgthms.com') Jeremy Thomas
+						| . The source code is licensed
+						a(href='http://opensource.org/licenses/mit-license.php') MIT
+						| . The website content
+						|           is licensed 
+						a(href='http://creativecommons.org/licenses/by-nc-sa/4.0/') CC ANS 4.0
+						| .
+					p
+						a.icon(href='https://github.com/jgthms/bulma')
+							i.fa.fa-github
+		script(type='text/javascript', src='../js/bulma.js')
