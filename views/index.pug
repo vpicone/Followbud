@@ -15,7 +15,7 @@ html
 				.container
 					.nav-left
 						a.nav-item(href='../index.html')
-							img(src='../images/bulma.png', alt='Description')
+							//-img(src='/images/logo.png', alt='logo')
 					span.nav-toggle
 						span
 						span
@@ -47,23 +47,27 @@ html
 					each playlist in playlists
 						+playlistCard(playlist)
 			else
-				p You're not logged in just yet. 
-				a(href='/auth').button Click here
-				p to authorize your account.
+				.level
+					.level-item.has-text-centered
+						p You're not logged in just yet. Lets take care of that.
+				.level
+					.level-item.has-text-centered
+						a(href='/auth').button Click here
+						
 		footer.footer
 			.container
 				.content.has-text-centered
 					p
-						strong Bulma
-						|  by 
-						a(href='http://jgthms.com') Jeremy Thomas
-						| . The source code is licensed
+						strong Followfy
+						|  made with love by 
+						a(href='https://github.com/vpicone') Vince Picone
+						| . The source code is licensed 
 						a(href='http://opensource.org/licenses/mit-license.php') MIT
 						| . The website content
 						|           is licensed 
 						a(href='http://creativecommons.org/licenses/by-nc-sa/4.0/') CC ANS 4.0
 						| .
 					p
-						a.icon(href='https://github.com/jgthms/bulma')
+						a.icon(href='https://github.com/vpicone')
 							i.fa.fa-github
 		script(type='text/javascript', src='../js/bulma.js')
