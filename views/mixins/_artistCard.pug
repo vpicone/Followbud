@@ -1,12 +1,22 @@
 mixin artistCard(item = {})
-	.column.is-half.is-offset-one-quarter
+	.column.is-10.is-offset-1
 		.level
 			.level-left
+				each artist in item.track.artists
+					.level-item
+						span= `${artist.name},`
 				.level-item
-					span=item.name
+					i.fa.fa-arrow-right
+				.level-item
+					span= item.track.name
+				.level-item
+					span= item.track.following
 			.level-right
 				.level-item
-					a(href="").button Follow
+					if item.track.following
+						a(href="").button Followed
+					else
+						a(href="").button.is-primary Follow
 						
 		
 		
