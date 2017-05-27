@@ -1,0 +1,5 @@
+extends layout
+include mixins/_artistCard
+block content
+    each item in playlistArtists
+        +artistCard(item)

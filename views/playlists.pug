@@ -1,10 +1,11 @@
 extends layout
 include mixins/_playlistCard
+include mixins/_artistCard
 block content
 	if playlists
 		.columns.is-multiline
 			each playlist in playlists
-				+playlistCard(playlist)
+				+playlistCard(playlist, currentUser)
 	else
 		.level
 			.level-item.has-text-centered

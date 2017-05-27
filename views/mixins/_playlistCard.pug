@@ -16,11 +16,5 @@ mixin playlistCard(playlist = {})
 						img(src="../images/Spotify_Icon_RGB_Black.png", alt='Image2323')
 			.card-content
 				.panel-block-item
-					span.likes
-						span.icon
-							i.fa.fa-heart
-						|                 303k Likes
-					span.comments
-						span.icon
-							i.fa.fa-comment
-						|                 12k Comments
+					a(href=`${playlist.owner.id}/${playlist.id}` value=).button View Playlist Artists
+						
