@@ -15,15 +15,26 @@ exports.getPlaylistArtists = async(req, res) => {
   const playlistid = req.params.playlistid;
   const ownerid = req.params.ownerid;
   const userid = req.params.userid;
-  const tracks = Array.from((await spotifyApi.getPlaylistTracks(req.params.ownerid, req.params.playlistid, {"fields" : "items.track(name,artists)"})).body.items);
+  const tracks = Array.from((await spotifyApi.getPlaylistTracks(req.params.ownerid, req.params.playlistid, {
+    "fields": "items.track(name,artists)"
+  })).body.items);
   let playlistArtists = [];
-  tracks.forEach(thisTrack => {
-    const artists = Array.from(thisTrack.track.artists)
-      artists.forEach(artist => {
-        playlistArtists.push(artist);
-      });
-  });
-  
+  for (let i = 0; i < tracks.length; i++) {
+    //get all the artists in a track and push the entire artist object to playlist artists for total follow
+    const artists = Array.from(tracks[i].track.artists)
+    playlistArtists.push(artists);
+
+    //get artist ids for a track
+    const artistIds = [];
+    artists.forEach(artist => {
+      artistIds.push(artist.id);
+    });
+
+    //sets following to true if all the artists are followed
+    tracks[i].track.following = !((await spotifyApi.isFollowingArtists(artistIds)).body.includes(false));
+  };
+
+
 
   res.render('playlistDetail', {
     title: 'Playlist Detail View',
