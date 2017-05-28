@@ -1,7 +1,5 @@
 extends layout
 include mixins/_artistCard
-head
-    title = title;
 block content
     each item in tracks
         +artistCard(item)

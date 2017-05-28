@@ -9,8 +9,6 @@ exports.getPlaylists = async(req, res) => {
   
   
   
-  
-  
   res.render('playlists', {
     title: 'Playlists',
     playlists: currentUser.playlists,

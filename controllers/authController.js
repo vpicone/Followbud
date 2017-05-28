@@ -2,7 +2,7 @@ const open = require('open');
 
 let currentUser = {};
 
-const scopes = ['user-read-private', 'user-read-email'];
+const scopes = ['user-follow-read', 'user-follow-modify', 'playlist-read-collaborative', 'playlist-read-private', 'user-top-read'];
 
 exports.homePage = (req, res) => {
   res.render('playlists', {

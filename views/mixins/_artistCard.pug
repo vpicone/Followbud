@@ -1,14 +1,20 @@
 mixin artistCard(item = {})
-	.column.is-10.is-offset-1
+	.column.is-12
 		.level
 			.level-left
-				each artist in item.track.artists
+				.level-item
+					.content.is-large
+						span= `Artists: `
+				each artist, index in item.track.artists
 					.level-item
-						span= `${artist.name},`
+						.content.is-large
+							if (index == item.track.artists.length-1)
+								span= artist.name
+							else
+								span= `${artist.name}, `
 				.level-item
-					i.fa.fa-arrow-right
-				.level-item
-					span= item.track.name
+					.content.is-medium
+						p= `→ Track: \"${item.track.name}\"`
 			.level-right
 				.level-item
 					if item.track.following
