@@ -9,14 +9,14 @@ mixin playlistCard(playlist = {})
 				span.card-header-icon.timestamp
 					| Tracks: #{playlist.tracks.total}
 			.card-image
-				figure.image.is-4by3
+				figure.image.is-square
 					if playlist.images[0] != undefined
 						img(src=`${playlist.images[0].url}`, alt='Image')
 					else
-						img(src="../images/Spotify_Icon_RGB_Black.png", alt='Image2323')
+						img(src="../images/Spotify_Icon_RGB_Black.png", alt='Image')
 			.card-footer
 				.card-footer-item
-					a(href=`${playlist.owner.id}/${playlist.id}`) Playlist Detail View
+					a(href=`/${playlist.owner.id}/${playlist.id}`) Playlist Detail View
 				.card-footer-item
-					a(href='') Follow All Unfollowed
+					a(href=`/follow/${currentUser}/${playlist.owner.id}/${playlist.id}`) Follow All Unfollowed
 						

@@ -9,14 +9,12 @@ mixin artistCard(item = {})
 					i.fa.fa-arrow-right
 				.level-item
 					span= item.track.name
-				.level-item
-					span= item.track.following
 			.level-right
 				.level-item
 					if item.track.following
-						a(href="").button Followed
+						a(href="").button.is-medium Followed
 					else
-						a(href="").button.is-primary Follow
+						a(href="").button.is-primary.is-medium Follow
 						
 		
 		

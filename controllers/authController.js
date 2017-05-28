@@ -5,7 +5,7 @@ let currentUser = {};
 const scopes = ['user-read-private', 'user-read-email'];
 
 exports.homePage = (req, res) => {
-  res.render('index', {
+  res.render('playlists', {
     title: 'Followfy|Home'
   });
 };

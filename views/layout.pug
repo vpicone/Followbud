@@ -8,6 +8,7 @@ html
 		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
 		link#bulma(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css')
 		link(rel='stylesheet', type='text/css', href='/stylesheets/grid-gallery.css')
+		link(rel="icon", type="image/ico", href="/images/favicon.ico")
 	body
 		block header
 			.container.section
@@ -26,22 +27,19 @@ html
 							a.nav-item.is-tab
 								| Features
 							a.nav-item.is-tab
-								| Team
-							a.nav-item.is-tab
-								| Help
-							span.nav-item
-								a.button
-									| Log in
-								a.button.is-info
-									| Sign up
+								| About
+							// span.nav-item
+							// 	a.button.is-danger
+							// 		| Log out
 				.columns.section
 					.column.is-8
-						.title Gallery
-					.column.is-4.has-text-right
-						a.button.is-active
-							i.fa.fa-th.title.is-5
-						a.button
-							i.fa.fa-align-justify.title.is-5
+						.title Followfy
+					// TODO line item view
+					// .column.is-4.has-text-right
+					// 	a.button.is-active
+					// 		i.fa.fa-th.title.is-5
+					// 	a.button
+					// 		i.fa.fa-align-justify.title.is-5
 				block content
 		block footer
 			footer.footer

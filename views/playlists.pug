@@ -1,6 +1,5 @@
 extends layout
 include mixins/_playlistCard
-include mixins/_artistCard
 block content
 	if playlists
 		.columns.is-multiline
@@ -9,7 +8,8 @@ block content
 	else
 		.level
 			.level-item.has-text-centered
-				p You're not logged in just yet. Lets take care of that.
+				.content.is-medium
+					p You're not logged in just yet. Lets take care of that.
 		.level
 			.level-item.has-text-centered
-				a(href='/auth').button Click here
+				a(href='/auth').button.is-large Click Here
