@@ -1,5 +1,9 @@
 extends layout
 include mixins/_artistCard
 block content
-    each item in tracks
-        +artistCard(item)
+	.level
+		.level-item.has-text-centered
+			.button.is-large
+				a(href='/playlists') Back
+	each item in tracks
+		+artistCard(item)
