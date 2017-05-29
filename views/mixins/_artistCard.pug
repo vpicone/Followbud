@@ -9,9 +9,9 @@ mixin artistCard(item = {})
 					.level-item
 						.content.is-large
 							if (index == item.track.artists.length-1)
-								span= artist.name
+								span= artist.id
 							else
-								span= `${artist.name}, `
+								span= `${artist.id}, `
 				.level-item
 					.content.is-medium
 						p= `→ Track: \"${item.track.name}\"`
