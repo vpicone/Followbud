@@ -1,5 +1,3 @@
-const open = require('open');
-
 let currentUser = {};
 
 const scopes = ['user-follow-read', 'user-follow-modify', 'playlist-read-collaborative', 'playlist-read-private', 'user-top-read', 'user-library-read', 'user-top-read'];

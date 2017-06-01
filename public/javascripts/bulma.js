@@ -8,3 +8,12 @@
         menu.classList.toggle('is-active');
     });
 })();
+
+(function() {
+    var burger2 = document.querySelector('.button');
+    burger2.addEventListener('click', function() {
+        burger2.classList.toggle('is-loading');
+    });
+})();
+
+

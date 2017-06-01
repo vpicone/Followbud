@@ -1,4 +1,7 @@
 var express = require('express');
+const session = require('express-session');
+const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -6,6 +9,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const SpotifyWebAPI = require('spotify-web-api-node');
 const errorHandlers = require('./handlers/errorHandlers');
+const helpers = require('./helpers');
+
+
 
 
 var index = require('./routes/index');
@@ -24,6 +30,21 @@ spotifyApi = new SpotifyWebAPI({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(session({
+  secret: process.env.CLIENT_SECRET,
+  // key: process.env.CLIENT_ID,
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
+}));
+
+
+
+
+
+
 
 
 // uncomment after placing your favicon in /public
@@ -35,6 +56,17 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+// pass variables to our templates + all requests
+app.use((req, res, next) => {
+  res.locals.h = helpers;
+  res.locals.user = req.user || null;
+  res.locals.currentPath = req.path;
+  next();
+});
+
 
 
 app.use('/', index);

@@ -7,8 +7,9 @@ mixin playlistCard(playlist = {})
 					|               
 					span=`${playlist.name}`
 				span.card-header-icon.timestamp
-					| Artists: #{playlist.artistIds.length}
-					| Followed: #{playlist.numberFollowing}
+					p| Artists: #{playlist.artistIds.length}
+				span.card-header-icon.timestamp
+					p| Followed: #{playlist.numberFollowing}
 			.card-image
 				figure.image.is-square
 					if playlist.images[0] != undefined
@@ -16,8 +17,11 @@ mixin playlistCard(playlist = {})
 					else
 						img(src="../images/Spotify_Icon_RGB_Black.png", alt='Image')
 			.card-footer
+				// .card-footer-item
+				// 	a(href=`/${playlist.owner.id}/${playlist.id}`) Playlist Detail View
 				.card-footer-item
-					a(href=`/${playlist.owner.id}/${playlist.id}`) Playlist Detail View
-				.card-footer-item
-					a(href=`/follow/${currentUser}/${playlist.owner.id}/${playlist.id}`) Follow All Unfollowed
+					if !(playlist.artistIds.length == playlist.numberFollowing)
+						a(href=`/follow/${currentUser}/${playlist.owner.id}/${playlist.id}`) Follow unfollowed artists
+					else
+						p All artists followed
 						

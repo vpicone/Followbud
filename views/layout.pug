@@ -5,11 +5,14 @@ html
 		meta(http-equiv='X-UA-Compatible', content='IE=edge')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
 		link(rel='stylesheet', href='/stylesheets/fonts/css/font-awesome.min.css')
-		link#bulma(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css')
+		link#bulma(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css')
 		link(rel='stylesheet', type='text/css', href='/stylesheets/grid-gallery.css')
+		link(rel='stylesheet', type='text/css', href='/stylesheets/alertify.min.css')
 		link(rel="icon", type="image/ico", href="/images/favicon.ico")
 	body
 		block header
+		-console.log(currentPath)
+		-const location = currentPath.includes('tools') ? 'tools' : 'home'
 			.container.section
 				nav#top.nav.section
 					.container
@@ -21,12 +24,16 @@ html
 							span
 							span
 						.nav-right.nav-menu
-							a.nav-item.is-tab(href='/homepage')
-								| Home
-							a.nav-item.is-tab(href='/tools')
-								| Tools
-							a.nav-item.is-tab
-								| About
+							if (location == 'tools')
+								a.nav-item.is-tab(href='/homepage')
+									| Home
+								a.nav-item.is-tab(href='/tools').is-active
+									| Tools
+							else
+								a.nav-item.is-tab(href='/homepage').is-active
+									| Home
+								a.nav-item.is-tab(href='/tools')
+									| Tools
 							// span.nav-item
 							// 	a.button.is-danger
 							// 		| Log out
@@ -59,3 +66,8 @@ html
 								i.fa.fa-github
 		block scripts
 			script(type='text/javascript', src='/javascripts/bulma.js')
+			
+			
+			
+			
+			

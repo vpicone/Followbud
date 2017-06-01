@@ -2,15 +2,31 @@ extends layout
 include mixins/_playlistCard
 block content
 	if playlists
-		.columns.is-multiline
+		.columns
 			each playlist in playlists
 				+playlistCard(playlist, currentUser)
+		.level
+			.level-left
+			.level-item.has-text-centered
+				-prevPage = parseInt(page)-1
+				-nextPage = parseInt(page)+1
+				if page == 0
+					.pagination.is-large
+						a(disabled='').pagination-previous Previous
+						a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).pagination-next Next
+				else
+					.pagination.is-large
+						a(href= "/" + currentUser + "/playlists" + "/page/" + prevPage).pagination-previous Previous
+						a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).pagination-next Next
+					
 	else
 		.level
+			.level-left
 			.level-item.has-text-centered
 				.content.is-medium
 					p Followfy lets you easily follow the artists from your favorite Spotify playlists.
 					p You're not logged in just yet. Lets take care of that.
 		.level
-			.level-item.has-text-centered
-				a(href='/auth').button.is-large Click Here
+			.level-left
+			.level-item
+				a(href='/auth' id='login').button.is-large Log In

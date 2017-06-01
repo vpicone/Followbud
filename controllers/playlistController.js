@@ -3,41 +3,23 @@ exports.getPlaylists = async(req, res) => {
   const currentUserId = req.params.userid;
   const currentUserPlaylists = Array.from((await spotifyApi.getUserPlaylists(currentUserId)).body.items);
   
+  const page = req.params.page || 0;
+  const pagePlaylists = []
   
   
-  for(let i = 0; i < currentUserPlaylists.length; i++) {
-    //get the artist Ids for a playlist
+  for(let i = page * 3 ; i < (page * 3) + 3; i++) {
     //const artistIdsWithDuplicates = removeDuplicates(artistIdsWithDuplicates);
     currentUserPlaylists[i].artistIds = await (getArtistIdsFromPlaylist(currentUserPlaylists[i]));
-    console.log("DUPLICATES?!?! " + removeDuplicates(currentUserPlaylists[i].artistIds));
     //currentUserPlaylists[i].artistIds = removeDuplicates(currentUserPlaylists[i].artistIds);
     currentUserPlaylists[i].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylists[i].artistIds));
+    pagePlaylists.push(currentUserPlaylists[i]);
   }
   
-  
-  // for(let i = 0; i < currentUserPlaylists.length; i++) {
-  //   console.log(currentUserPlaylists[i].name);
-  //   console.log(currentUserPlaylists[i].artistIds.length);
-  //   currentUserPlaylists[i].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylists[i].artistIds));
-  //   console.log(currentUserPlaylists[i].numberFollowing)
-  // }
-  
-  // currentUserPlaylists[5].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylists[5].artistIds));
-  // currentUserPlaylists[6].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylists[6].artistIds));
-  // currentUserPlaylists[7].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylists[7].artistIds));
-  // //currentUserPlaylists[3].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylists[3].artistIds));
-  
-  
-  
-  for(let i = 0; i < currentUserPlaylists.length; i++) {
-    console.log(currentUserPlaylists[i].name);
-    console.log(currentUserPlaylists[i].artistIds.length);
-    console.log(currentUserPlaylists[i].numberFollowing)
-  }
   
   res.render('playlists', {
     title: `${currentUserProfile.body.display_name} - Playlists`,
-    playlists: currentUserPlaylists,
+    page,
+    playlists: pagePlaylists,
     currentUser: currentUserId,
   });
 };
@@ -58,8 +40,17 @@ exports.followPlaylistArtists = async(req, res) => {
         playlistArtistIds.push(artist.id);
     });
   };
-  await spotifyApi.followArtists(playlistArtistIds);
-  res.redirect('/playlists');
+  
+  
+  //split artists into chunks to check for following
+  let i,j,temparray,chunk = 50;
+  for (i=0 ,j=playlistArtistIds.length; i < j; i+=chunk) {
+    temparray = playlistArtistIds.slice(i, i+chunk);
+    await spotifyApi.followArtists(temparray.filter(n => n));
+  }
+  
+  
+  res.redirect(`/${userid}/playlists/`);
 };
 
 
@@ -118,7 +109,7 @@ async function getNumberofArtistsFollowing(artistIds) {
   let numberFollowing = 0;
   
   //split artists into chunks to check for following
-  let i,j,temparray,chunk = 25;
+  let i,j,temparray,chunk = 50;
   for (i=0 ,j=artistIds.length; i < j; i+=chunk) {
     temparray = artistIds.slice(i, i+chunk);
     

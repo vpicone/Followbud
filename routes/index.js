@@ -16,6 +16,9 @@ router.get('/auth/logout', authController.logOut);
 
 router.get('/playlists', catchErrors(playlistController.getPlaylists));
 router.get('/:userid/playlists', catchErrors(playlistController.getPlaylists));
+router.get('/:userid/playlists/page/:page', catchErrors(playlistController.getPlaylists));
+
+
 router.get('/:ownerid/:playlistid', catchErrors(playlistController.getPlaylistArtists));
 
 router.get('/follow/:userid/:ownerid/:playlistid', catchErrors(playlistController.followPlaylistArtists));
