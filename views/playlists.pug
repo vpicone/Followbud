@@ -2,6 +2,7 @@ extends layout
 include mixins/_playlistCard
 block content
 	if playlists
+		-console.log(`Page: ${page} Pages: ${pages}`)
 		.columns
 			each playlist in playlists
 				+playlistCard(playlist, currentUser)
@@ -14,11 +15,16 @@ block content
 						a(disabled='').button.is-large Previous  
 					.level-item
 						a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).button.is-large Next
+			else if page == pages-1
+				.level-item
+					a(href= "/" + currentUser + "/playlists" + "/page/" + prevPage).button.is-large Previous
+				.level-item
+					a(disabled="").button.is-large Next
 			else
-					.level-item
-						a(href= "/" + currentUser + "/playlists" + "/page/" + prevPage).button.is-large Previous
-					.level-item
-						a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).button.is-large Next
+				.level-item
+					a(href= "/" + currentUser + "/playlists" + "/page/" + prevPage).button.is-large Previous
+				.level-item
+					a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).button.is-large Next
 					
 	else
 		.level
