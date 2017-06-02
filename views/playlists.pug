@@ -7,17 +7,18 @@ block content
 				+playlistCard(playlist, currentUser)
 		.level
 			.level-left
-			.level-item.has-text-centered
-				-prevPage = parseInt(page)-1
-				-nextPage = parseInt(page)+1
-				if page == 0
-					.pagination.is-large
-						a(disabled='').pagination-previous Previous
-						a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).pagination-next Next
-				else
-					.pagination.is-large
-						a(href= "/" + currentUser + "/playlists" + "/page/" + prevPage).pagination-previous Previous
-						a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).pagination-next Next
+			-prevPage = parseInt(page)-1
+			-nextPage = parseInt(page)+1
+			if page == 0
+					.level-item
+						a(disabled='').button.is-large Previous  
+					.level-item
+						a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).button.is-large Next
+			else
+					.level-item
+						a(href= "/" + currentUser + "/playlists" + "/page/" + prevPage).button.is-large Previous
+					.level-item
+						a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).button.is-large Next
 					
 	else
 		.level
