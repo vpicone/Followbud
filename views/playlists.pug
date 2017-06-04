@@ -2,7 +2,6 @@ extends layout
 include mixins/_playlistCard
 block content
 	if playlists
-		-console.log(`Page: ${page} Pages: ${pages}`)
 		.columns
 			each playlist in playlists
 				+playlistCard(playlist, currentUser)

@@ -9,7 +9,8 @@ exports.homePage = (req, res) => {
 };
 
 exports.requestAuthorizationCode = async(req, res) => {
-  const authorizeURL = await spotifyApi.createAuthorizeURL(scopes);
+  //req.session.test = 'test';
+  const authorizeURL = await req.spotifyApi.createAuthorizeURL(scopes);
   res.redirect(authorizeURL);
 };
 
@@ -17,13 +18,7 @@ exports.requestAuthorizationCode = async(req, res) => {
 // To do: seperate authorization logic via sessions
 exports.setUserAccessToken = async(req, res) => {
   const authorizationCode = req.query.code;
-  spotifyApi.setAccessToken((await spotifyApi.authorizationCodeGrant(authorizationCode)).body['access_token']);
-  const userid = (await spotifyApi.getMe()).body.id;
+  req.spotifyApi.setAccessToken((await req.spotifyApi.authorizationCodeGrant(authorizationCode)).body['access_token']);
+  const userid = (await req.spotifyApi.getMe()).body.id;
   res.redirect(`/${userid}/playlists`);
-};
-
-exports.logOut = (req, res) => {
-  const authorizeURL = spotifyApi.createAuthorizeURL(scopes);
-  open("http:www.spotify.com/logout");
-  res.redirect('/');
 };

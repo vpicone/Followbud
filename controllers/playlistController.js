@@ -1,24 +1,23 @@
 exports.getPlaylists = async(req, res) => {
-  const currentUserProfile = (await spotifyApi.getMe());
+
+  //console.log(req.session.test);
+  const currentUserProfile = (await req.spotifyApi.getMe());
   const currentUserId = req.params.userid;
-  const currentUserPlaylists = Array.from((await spotifyApi.getUserPlaylists(currentUserId)).body.items);
+  const currentUserPlaylists = Array.from((await req.spotifyApi.getUserPlaylists(currentUserId)).body.items);
   const pages = Math.ceil(currentUserPlaylists.length / 3);
   const page = req.params.page || 0;
   const pagePlaylists = []
-
-  console.log(pages);
 
 
   for (let i = page * 3; i < (page * 3) + 3; i++) {
     //const artistIdsWithDuplicates = removeDuplicates(artistIdsWithDuplicates);
     if (currentUserPlaylists[i]) {
-      currentUserPlaylists[i].artistIds = await (getArtistIdsFromPlaylist(currentUserPlaylists[i]));
+      currentUserPlaylists[i].artistIds = await (getArtistIdsFromPlaylist(currentUserPlaylists[i], req));
       //currentUserPlaylists[i].artistIds = removeDuplicates(currentUserPlaylists[i].artistIds);
-      currentUserPlaylists[i].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylists[i].artistIds));
+      currentUserPlaylists[i].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylists[i].artistIds, req));
       pagePlaylists.push(currentUserPlaylists[i]);
     }
   }
-
 
   res.render('playlists', {
     title: `${currentUserProfile.body.display_name} - Playlists`,
@@ -34,7 +33,7 @@ exports.followPlaylistArtists = async(req, res) => {
   const ownerid = req.params.ownerid;
   const userid = req.params.userid;
   let playlistArtistIds = [];
-  const items = Array.from((await spotifyApi.getPlaylistTracks(req.params.ownerid, req.params.playlistid, {
+  const items = Array.from((await req.spotifyApi.getPlaylistTracks(req.params.ownerid, req.params.playlistid, {
     "fields": "items.track(artists.id)"
   })).body.items);
 
@@ -51,9 +50,8 @@ exports.followPlaylistArtists = async(req, res) => {
   let i, j, temparray, chunk = 50;
   for (i = 0, j = playlistArtistIds.length; i < j; i += chunk) {
     temparray = playlistArtistIds.slice(i, i + chunk);
-    await spotifyApi.followArtists(temparray.filter(n => n));
+    await req.spotifyApi.followArtists(temparray.filter(n => n));
   }
-
 
   res.redirect(`/${userid}/playlists/`);
 };
@@ -62,7 +60,7 @@ exports.followPlaylistArtists = async(req, res) => {
 exports.getPlaylistArtists = async(req, res) => {
   const playlistid = req.params.playlistid;
   const ownerid = req.params.ownerid;
-  const tracks = Array.from((await spotifyApi.getPlaylistTracks(req.params.ownerid, req.params.playlistid, {
+  const tracks = Array.from((await req.spotifyApi.getPlaylistTracks(req.params.ownerid, req.params.playlistid, {
     "fields": "items.track(name,artists)"
   })).body.items);
 
@@ -77,7 +75,7 @@ exports.getPlaylistArtists = async(req, res) => {
     });
 
     //sets following to true if all the artists are followed
-    tracks[i].track.following = !((await spotifyApi.isFollowingArtists(artistIds)).body.includes(false));
+    tracks[i].track.following = !((await req.spotifyApi.isFollowingArtists(artistIds)).body.includes(false));
   };
 
   res.render('playlistDetail', {
@@ -86,9 +84,9 @@ exports.getPlaylistArtists = async(req, res) => {
   });
 };
 
-async function getArtistIdsFromPlaylist(playlist) {
+async function getArtistIdsFromPlaylist(playlist, req) {
 
-  const tracks = Array.from((await spotifyApi.getPlaylistTracks(playlist.owner.id, playlist.id, {
+  const tracks = Array.from((await req.spotifyApi.getPlaylistTracks(playlist.owner.id, playlist.id, {
     "fields": "items.track(artists)"
   })).body.items);
   let playlistArtistIds = [];
@@ -106,7 +104,7 @@ async function getArtistIdsFromPlaylist(playlist) {
   return playlistArtistIds;
 };
 
-async function getNumberofArtistsFollowing(artistIds) {
+async function getNumberofArtistsFollowing(artistIds, req) {
 
 
   //console.log(`BLANK SLOT HERE: ${artistIds.indexOf(null)}`);
@@ -120,7 +118,7 @@ async function getNumberofArtistsFollowing(artistIds) {
 
 
     //black magic to remove errant null ids
-    let artists = (await spotifyApi.isFollowingArtists(temparray.filter(n => n))).body;
+    let artists = (await req.spotifyApi.isFollowingArtists(temparray.filter(n => n))).body;
     for (let i = 0; i < temparray.length; i++) {
       if (artists[i]) {
         numberFollowing++;

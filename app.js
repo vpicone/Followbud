@@ -20,15 +20,18 @@ var users = require('./routes/users');
 
 var app = express();
 
-spotifyApi = new SpotifyWebAPI({
-  clientId: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  redirectUri: process.env.CLIENT_CALLBACK
-});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(cookieParser());
+
 
 app.use(session({
   secret: process.env.CLIENT_SECRET,
@@ -40,8 +43,11 @@ app.use(session({
   })
 }));
 
-
-
+var spotifyApi = new SpotifyWebAPI({
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  redirectUri: process.env.CLIENT_CALLBACK
+});
 
 
 
@@ -50,11 +56,6 @@ app.use(session({
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -64,6 +65,7 @@ app.use((req, res, next) => {
   res.locals.h = helpers;
   res.locals.user = req.user || null;
   res.locals.currentPath = req.path;
+  req.spotifyApi = spotifyApi;
   next();
 });
 
