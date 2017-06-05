@@ -4,7 +4,7 @@ const scopes = ['user-follow-read', 'user-follow-modify', 'playlist-read-collabo
 
 exports.homePage = (req, res) => {
   res.render('playlists', {
-    title: 'Followfy - Home'
+    title: 'Followbud - Home'
   });
 };
 

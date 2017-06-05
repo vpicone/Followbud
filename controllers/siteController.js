@@ -1,11 +1,11 @@
 exports.getTools = (req, res) => {
   res.render('tools', {
-    title: 'Followfy - Tools'
+    title: 'Followbud - Tools'
   });
 };
 
 exports.homePage = (req, res) => {
   res.render('playlists', {
-    title: 'Followfy - Home'
+    title: 'Followbud - Home'
   });
 };
