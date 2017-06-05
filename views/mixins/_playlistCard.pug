@@ -6,10 +6,8 @@ mixin playlistCard(playlist = {})
 					img.avatar(src=`${playlist.images[0].url}`)
 					|               
 					span=`${playlist.name}`
-				span.card-header-icon.timestamp
-					span Artists: #{playlist.artistIds.length}
-				span.card-header-icon.timestamp
-					span Followed: #{playlist.numberFollowing}
+				span.card-header-icon.timestamp Artists: #{playlist.artistIds.length}
+				span.card-header-icon.timestamp Followed: #{playlist.numberFollowing}
 			.card-image
 				figure.image.is-square
 					if playlist.images[0] != undefined
