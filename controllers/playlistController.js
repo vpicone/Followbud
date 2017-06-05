@@ -1,26 +1,24 @@
 exports.getPlaylists = async(req, res) => {
-
-  //console.log(req.session.test);
-  const currentUserProfile = (await req.spotifyApi.getMe());
   const currentUserId = req.params.userid;
-  const currentUserPlaylists = Array.from((await req.spotifyApi.getUserPlaylists(currentUserId)).body.items);
-  const pages = Math.ceil(currentUserPlaylists.length / 3);
   const page = req.params.page || 0;
+  const currentUserPlaylists = await req.spotifyApi.getUserPlaylists(currentUserId, {
+    'limit': '3',
+    'offset': page * 3
+  });
+  const pages = Math.ceil(currentUserPlaylists.body.total / 3)
+  const currentUserPlaylistsThisPage = Array.from(currentUserPlaylists.body.items);
+
   const pagePlaylists = []
-
-
-  for (let i = page * 3; i < (page * 3) + 3; i++) {
-    //const artistIdsWithDuplicates = removeDuplicates(artistIdsWithDuplicates);
-    if (currentUserPlaylists[i]) {
-      currentUserPlaylists[i].artistIds = await (getArtistIdsFromPlaylist(currentUserPlaylists[i], req));
-      //currentUserPlaylists[i].artistIds = removeDuplicates(currentUserPlaylists[i].artistIds);
-      currentUserPlaylists[i].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylists[i].artistIds, req));
-      pagePlaylists.push(currentUserPlaylists[i]);
-    }
-  }
+  for (let i = 0; i < 3; i++) {
+    if (currentUserPlaylistsThisPage[i]) {
+      currentUserPlaylistsThisPage[i].artistIds = await (getArtistIdsFromPlaylist(currentUserPlaylistsThisPage[i], req));
+      currentUserPlaylistsThisPage[i].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylistsThisPage[i].artistIds, req));
+      pagePlaylists.push(currentUserPlaylistsThisPage[i]);
+    };
+  };
 
   res.render('playlists', {
-    title: `${currentUserProfile.body.display_name} - Playlists`,
+    title: `Here's your playlists.`,
     pages,
     page,
     playlists: pagePlaylists,
@@ -107,7 +105,7 @@ async function getArtistIdsFromPlaylist(playlist, req) {
 async function getNumberofArtistsFollowing(artistIds, req) {
 
 
-  //console.log(`BLANK SLOT HERE: ${artistIds.indexOf(null)}`);
+
 
   let numberFollowing = 0;
 
@@ -126,8 +124,7 @@ async function getNumberofArtistsFollowing(artistIds, req) {
     };
   }
 
-  // console.log(`Number of artists: ${artists.length}`);
-  // console.log(`Number following: ${numberFollowing}`);
+
   return numberFollowing;
 
 };

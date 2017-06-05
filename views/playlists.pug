@@ -2,6 +2,12 @@ extends layout
 include mixins/_playlistCard
 block content
 	if playlists
+		link(rel='stylesheet', href='/stylesheets/grid-gallery.css')
+		.level
+			.level-item
+				.content.is-medium.has-text-centered Click the button beneath each playlist card to follow all the artists therein.
+		.level
+			.level-item
 		.columns
 			each playlist in playlists
 				+playlistCard(playlist, currentUser)
@@ -11,27 +17,26 @@ block content
 			-nextPage = parseInt(page)+1
 			if page == 0
 					.level-item
-						a(disabled='').button.is-large Previous  
+						a(disabled='' style="pointer-events: none").button.is-large Previous  
 					.level-item
 						a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).button.is-large Next
 			else if page == pages-1
 				.level-item
 					a(href= "/" + currentUser + "/playlists" + "/page/" + prevPage).button.is-large Previous
 				.level-item
-					a(disabled="").button.is-large Next
+					a(disabled="" style="pointer-events: none").button.is-large Next
 			else
 				.level-item
 					a(href= "/" + currentUser + "/playlists" + "/page/" + prevPage).button.is-large Previous
 				.level-item
 					a(href= "/" + currentUser + "/playlists" + "/page/" + nextPage).button.is-large Next
-					
 	else
 		.level
 			.level-left
 			.level-item.has-text-centered
 				.content.is-medium
 					p Followbud lets you easily follow the artists from your favorite Spotify playlists.
-					p You're not logged in just yet. Lets take care of that.
+					p You're not logged in just yet. Let's take care of that.
 		.level
 			.level-left
 			.level-item

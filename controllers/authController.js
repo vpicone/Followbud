@@ -1,6 +1,6 @@
 let currentUser = {};
 
-const scopes = ['user-follow-read', 'user-follow-modify', 'playlist-read-collaborative', 'playlist-read-private', 'user-top-read', 'user-library-read', 'user-top-read'];
+const scopes = ['user-follow-read', 'user-follow-modify', 'playlist-read-collaborative', 'playlist-read-private', 'user-library-read'];
 
 exports.homePage = (req, res) => {
   res.render('playlists', {

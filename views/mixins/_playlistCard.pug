@@ -7,9 +7,9 @@ mixin playlistCard(playlist = {})
 					|               
 					span=`${playlist.name}`
 				span.card-header-icon.timestamp
-					p| Artists: #{playlist.artistIds.length}
+					span Artists: #{playlist.artistIds.length}
 				span.card-header-icon.timestamp
-					p| Followed: #{playlist.numberFollowing}
+					span Followed: #{playlist.numberFollowing}
 			.card-image
 				figure.image.is-square
 					if playlist.images[0] != undefined
