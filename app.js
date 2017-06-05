@@ -1,15 +1,17 @@
-var express = require('express');
+const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const SpotifyWebAPI = require('spotify-web-api-node');
 const errorHandlers = require('./handlers/errorHandlers');
 const helpers = require('./helpers');
+const compression = require('compression');
+var helmet = require('helmet');
 
 
 
@@ -20,7 +22,8 @@ var users = require('./routes/users');
 
 var app = express();
 
-
+app.use(helmet());
+app.use(compression());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
