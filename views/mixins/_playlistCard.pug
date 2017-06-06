@@ -1,25 +1,24 @@
 mixin playlistCard(playlist = {})
-	.column.is-4
-		.card
-			header.card-header
-				p.card-header-title
-					img.avatar(src=`${playlist.images[0].url}`)
-					|               
-					span=`${playlist.name}`
-				span.card-header-icon.timestamp Artists: #{playlist.artistIds.length}
-				span.card-header-icon.timestamp Followed: #{playlist.numberFollowing}
-			.card-image
-				figure.image.is-square
-					if playlist.images[0] != undefined
-						img(src=`${playlist.images[0].url}`, alt='Image')
-					else
-						img(src="../images/Spotify_Icon_RGB_Black.png", alt='Image')
-			.card-footer
-				// .card-footer-item
-				// 	a(href=`/${playlist.owner.id}/${playlist.id}`) Playlist Detail View
-				.card-footer-item
-					if !(playlist.artistIds.length == playlist.numberFollowing)
-						a(href=`/follow/${currentUser}/${playlist.owner.id}/${playlist.id}/${page}`) Follow unfollowed artists
-					else
-						p All artists followed
+	.card
+		header.card-header
+			p.card-header-title
+				img.avatar(src=`${playlist.images[0].url}`)
+				|               
+				span=`${playlist.name}`
+			span.card-header-icon.timestamp Artists: #{playlist.artistIds.length}
+			span.card-header-icon.timestamp Followed: #{playlist.numberFollowing}
+		.card-image
+			figure.image.is-square
+				if playlist.images[0] != undefined
+					img(src=`${playlist.images[0].url}`, alt='Image')
+				else
+					img(src="../images/Spotify_Icon_RGB_Black.png", alt='Image')
+		.card-footer
+			// .card-footer-item
+			// 	a(href=`/${playlist.owner.id}/${playlist.id}`) Playlist Detail View
+			.card-footer-item
+				if !(playlist.artistIds.length == playlist.numberFollowing)
+					a(href=`/follow/${currentUser}/${playlist.owner.id}/${playlist.id}/${page}`) Follow unfollowed artists
+				else
+					p All artists followed
 						

@@ -8,9 +8,25 @@ block content
 				.content.is-large.has-text-centered Click the button beneath each playlist card to follow all the artists therein.
 		.level
 			.level-item
-		.columns
+		.columns.is-multiline
 			each playlist in playlists
-				+playlistCard(playlist, currentUser, page)
+				.column.is-one-third
+					+playlistCard(playlist, currentUser, page)
+		//- 	.column.is-one-third
+		//- 		+playlistCard(playlists[0], currentUser, page)
+		//- 	.column.is-one-third
+		//- 		+playlistCard(playlists[1], currentUser, page)
+		//- 	.column.is-one-third
+		//- 		+playlistCard(playlists[2], currentUser, page)
+		//- .columns
+		//- 	.column.is-one-third
+		//- 		+playlistCard(playlists[3], currentUser, page)
+		//- 	.column.is-one-third
+		//- 		+playlistCard(playlists[4], currentUser, page)
+		//- 	.column.is-one-third
+		//- 		+playlistCard(playlists[5], currentUser, page)
+			//- each playlist in playlists
+			//- 	+playlistCard(playlist, currentUser, page)
 		.level
 			.level-left
 			-prevPage = parseInt(page)-1

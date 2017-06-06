@@ -1,15 +1,16 @@
 exports.getPlaylists = async(req, res) => {
   const currentUserId = req.params.userid;
   const page = req.params.page || 0;
+  const countPerPage = 6
   const currentUserPlaylists = await req.spotifyApi.getUserPlaylists(currentUserId, {
-    'limit': '3',
-    'offset': page * 3
+    'limit': countPerPage,
+    'offset': page * countPerPage
   });
-  const pages = Math.ceil(currentUserPlaylists.body.total / 3)
+  const pages = Math.ceil(currentUserPlaylists.body.total / countPerPage)
   const currentUserPlaylistsThisPage = Array.from(currentUserPlaylists.body.items);
 
   const pagePlaylists = []
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < countPerPage; i++) {
     if (currentUserPlaylistsThisPage[i]) {
       currentUserPlaylistsThisPage[i].artistIds = await (getArtistIdsFromPlaylist(currentUserPlaylistsThisPage[i], req));
       currentUserPlaylistsThisPage[i].numberFollowing = await (getNumberofArtistsFollowing(currentUserPlaylistsThisPage[i].artistIds, req));
