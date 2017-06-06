@@ -7,8 +7,6 @@ html
 		link#bulma(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css')
 		link(rel="icon", type="image/ico", href="/images/favicon.ico")
 	body
-		//-This iframe prevents back/forward cache hopefully
-		iframe(style='height:0px;width:0px;visibility:hidden', src='about:blank')
 		block header
 		-const location = currentPath.includes('tools') ? 'tools' : 'home'
 			.container.section
