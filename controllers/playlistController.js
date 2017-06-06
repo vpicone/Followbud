@@ -30,6 +30,7 @@ exports.followPlaylistArtists = async(req, res) => {
   const playlistid = req.params.playlistid;
   const ownerid = req.params.ownerid;
   const userid = req.params.userid;
+  const refpage = req.params.refpage;
   let playlistArtistIds = [];
   const items = Array.from((await req.spotifyApi.getPlaylistTracks(req.params.ownerid, req.params.playlistid, {
     "fields": "items.track(artists.id)"
@@ -51,7 +52,7 @@ exports.followPlaylistArtists = async(req, res) => {
     await req.spotifyApi.followArtists(temparray.filter(n => n));
   }
 
-  res.redirect(`/${userid}/playlists/`);
+  res.redirect(`/${userid}/playlists/page/${refpage}`);
 };
 
 

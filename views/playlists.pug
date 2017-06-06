@@ -10,7 +10,7 @@ block content
 			.level-item
 		.columns
 			each playlist in playlists
-				+playlistCard(playlist, currentUser)
+				+playlistCard(playlist, currentUser, page)
 		.level
 			.level-left
 			-prevPage = parseInt(page)-1

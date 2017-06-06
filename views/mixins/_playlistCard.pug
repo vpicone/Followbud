@@ -19,7 +19,7 @@ mixin playlistCard(playlist = {})
 				// 	a(href=`/${playlist.owner.id}/${playlist.id}`) Playlist Detail View
 				.card-footer-item
 					if !(playlist.artistIds.length == playlist.numberFollowing)
-						a(href=`/follow/${currentUser}/${playlist.owner.id}/${playlist.id}`) Follow unfollowed artists
+						a(href=`/follow/${currentUser}/${playlist.owner.id}/${playlist.id}/${page}`) Follow unfollowed artists
 					else
 						p All artists followed
 						

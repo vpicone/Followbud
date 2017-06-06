@@ -20,7 +20,7 @@ router.get('/:userid/playlists/page/:page', catchErrors(playlistController.getPl
 
 router.get('/:ownerid/:playlistid', catchErrors(playlistController.getPlaylistArtists));
 
-router.get('/follow/:userid/:ownerid/:playlistid', catchErrors(playlistController.followPlaylistArtists));
+router.get('/follow/:userid/:ownerid/:playlistid/:refpage', catchErrors(playlistController.followPlaylistArtists));
 
 router.get('/tools', siteController.getTools);
 router.get('/homepage', siteController.homePage);
