@@ -11,16 +11,14 @@ const SpotifyWebAPI = require('spotify-web-api-node');
 const errorHandlers = require('./handlers/errorHandlers');
 const helpers = require('./helpers');
 const compression = require('compression');
-var helmet = require('helmet');
+const helmet = require('helmet');
 
 
+const index = require('./routes/index');
+const users = require('./routes/users');
 
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-
-
-var app = express();
+const app = express();
 
 app.use(helmet());
 app.use(compression());
@@ -31,36 +29,32 @@ app.set('view engine', 'pug');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: false,
 }));
 app.use(cookieParser());
 
 
-app.use(session({
-  secret: process.env.CLIENT_SECRET,
-  // key: process.env.CLIENT_ID,
-  resave: false,
-  saveUninitialized: false,
-  store: new MongoStore({
-    mongooseConnection: mongoose.connection
-  })
-}));
+// app.use(session({
+//   secret: process.env.CLIENT_SECRET,
+//   // key: process.env.CLIENT_ID,
+//   resave: false,
+//   saveUninitialized: false,
+//   store: new MongoStore({
+//     mongooseConnection: mongoose.connection
+//   })
+// }));
 
-var spotifyApi = new SpotifyWebAPI({
+const spotifyApi = new SpotifyWebAPI({
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  redirectUri: process.env.CLIENT_CALLBACK
+  redirectUri: process.env.CLIENT_CALLBACK,
 });
-
-
-
 
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 
 // pass variables to our templates + all requests
@@ -71,7 +65,6 @@ app.use((req, res, next) => {
   req.spotifyApi = spotifyApi;
   next();
 });
-
 
 
 app.use('/', index);

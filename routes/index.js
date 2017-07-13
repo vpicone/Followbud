@@ -5,7 +5,7 @@ const playlistController = require('../controllers/playlistController');
 const siteController = require('../controllers/siteController');
 
 const {
-  catchErrors
+  catchErrors,
 } = require('../handlers/errorHandlers');
 
 /* GET home page. */
@@ -20,13 +20,10 @@ router.get('/:userid/playlists/page/:page', catchErrors(playlistController.getPl
 
 router.get('/:ownerid/:playlistid', catchErrors(playlistController.getPlaylistArtists));
 
-router.get('/follow/:userid/:ownerid/:playlistid/:refpage', catchErrors(playlistController.followPlaylistArtists));
+router.get('/follow/:userid/:ownerid/:playlistid/:refpage/:artisttotal', catchErrors(playlistController.followPlaylistArtists));
 
 router.get('/tools', siteController.getTools);
 router.get('/homepage', siteController.homePage);
-
-
-
 
 
 module.exports = router;
